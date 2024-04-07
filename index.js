@@ -2,10 +2,12 @@ const express = require('express');
 const fs = require('fs').promises;
 const { G4F } = require('g4f');
 
-const router = express.Router();
+const app = express();
 const g4f = new G4F();
 
-router.get('/gptconvo', async (req, res) => {
+app.use(express.json());
+
+app.get('/gptconvo', async (req, res) => {
     const ask = req.query.ask;
     const id = req.query.id;
 
@@ -40,4 +42,7 @@ router.get('/gptconvo', async (req, res) => {
     }
 });
 
-module.exports = router;
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});
